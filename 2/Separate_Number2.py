@@ -1,28 +1,39 @@
 """
 もうめんどくせえから、前から数字を取り出していって、
 前回までの数字と照合して一致したらアウトのプログラム作る
+深さ優先探索をおこっている
+リストの最後の数字が一個の時は二個の参照はできない
+リストの外に出る＝エラーのはず
+２個の参照はできないようにしよう
+次に参照する位置とリストの最後が一致すれば、一文字しか参照できない
+もしくはリストの長さが98なら強制的に次の文字をリストに加える
 """
-def separate_list(input,pos,list):  # inputは入力する数列。posは見る位置。listは答えの候補を格納するもの
-    if len(list) == 99:
-        print(list)
-    
-    N_n = input[pos] # next number
-    if N_n not in list:
-        list.append(input[pos])
-        separate_list(input,pos+1,list)
+import sys
+import resource
+sys.setrecursionlimit(2000)
+print(sys.getrecursionlimit())
 
-    """
-    リストの最後の数字が一個の時は二個の参照はできない
-    リストの外に出た判定がよくわからんから、listの長さを測って98文字だったら、
-    ２個の参照はできないようにしよう
-    """
-    if len(list) == 98:
-        separate_list(input,pos+1,list)
-        
-    N_n = ''.join(input[pos:pos+2])
-    if N_n not in list:
-        list.append(''.join(input[pos:pos+2]))
-        separate_list(input,pos+2,list)
+def separate_list(input,pos,flist):  # inputは入力する数列。posは見る位置。listは答えの候補を格納するもの
+    if len(flist) == 99:
+        print(flist)
+        exit()
+
+    if input[pos+1] != 0:
+        N_n1 = input[pos] # next number
+        if N_n1 not in flist: # 次に参照する数字が今まで格納した数字に含まれない
+            print(N_n1,flist)
+            flist.append(N_n1) # リストに数字を格納
+            separate_list(input,pos+1,flist) # 次の再帰を実行
+ 
+    if input[pos] == input[-1]:
+        separate_list(input,pos+1,flist)
+
+    if input[pos+2] != 0:
+        N_n2 = ''.join(input[pos:pos+2])
+        if N_n2 not in flist:
+            print(N_n2,flist)
+            flist.append(N_n2)
+            separate_list(input,pos+2,flist)
 
     # 再帰処理どこにつっこもう？
     # separate_list(input,pos+1,list)
