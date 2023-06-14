@@ -14,7 +14,7 @@ def dfs(i, s):
         if int(S[i]) not in s:
             dfs(i + 1, s + [int(S[i])])
     # 2桁の数を追加（可能かつ0で始まらなければ）
-    if i < len(S) - 1 and S[i] != "0" and int(S[i:i+2]) <= 99:
+    if i < len(S) - 1 and S[i] != "0":
         # 重複チェック
         if int(S[i:i+2]) not in s:
             dfs(i + 2, s + [int(S[i:i+2])])
