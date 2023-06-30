@@ -35,7 +35,7 @@ def calc_degree():
                 # 次数にカウントした値を代入する
                 degree[i][j] = count
 
-# ナイトの初期位置を盤面の中央付近に設定する
+# ナイトの初期位置を盤面の中央付近に設定する. たまに解がでてこなくなるから
 start_x = n // 2
 start_y = n // 2
 board[start_x][start_y] = 0
