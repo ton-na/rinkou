@@ -1,25 +1,24 @@
-import math
-from sympy import primerange
+import decimal
 
-def is_prime(num):
-    n = int(math.sqrt(num)) + 1
-    primlist = list(primerange(2,n))
+decimal.getcontext().prec = 10000
 
-    if num < 2:
+def sqrt2():
+    return decimal.Decimal(2).sqrt()
+
+def is_prime(n):
+    if n <= 1:
         return False
-    for i in primlist:
-        if num % i == 0:
+    for i in range(2, int(n ** 0.5) + 1):
+        if n % i == 0:
             return False
     return True
 
-def decimal_to_prime(decimal):
-    integer = int(decimal * 10**11)
-    primes = []
-    for i in range(integer, integer + 10**11):
-        if is_prime(i):
-            primes.append(i)
-            if len(str(i)) == 11:
-                return i
+def find_prime():
+    sqrt2_str = str(sqrt2())[2:]
+    for i in range(len(sqrt2_str) - 10):
+        num = int(sqrt2_str[i:i+11])
+        if is_prime(num) & len(str(num)):
+            return num
     return None
 
-print(decimal_to_prime(math.sqrt(2) - int(math.sqrt(2))))
+print(find_prime())
